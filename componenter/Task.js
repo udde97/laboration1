@@ -1,12 +1,19 @@
-import React from "react"
+
 import { View,Text, StyleSheet, TouchableOpacity } from "react-native"
 
+import  UserContext ,{UserProvider } from './UserContext';
+import React, {useState,useContext, useEffect} from 'react';
+
 const Task = (props) => {
+    
+    const  userx = useContext(UserContext);
+    
     return (
         <View style = {styles.item}>
             <View style = {styles.itemLeft}>
+                
                 <TouchableOpacity style = {styles.square}></TouchableOpacity>
-                <Text style= {styles.itemText}>{props.text}</Text>
+                <Text style= {styles.itemText} >{props.text} {userx.name}</Text>
 
             </View>
             
@@ -40,8 +47,10 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginRight: 15,
     },
-    intemText: {
+    itemText: {
         maxWidth: "80%"
+        
+        
     },
     circular: {
         width: 12,

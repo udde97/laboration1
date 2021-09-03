@@ -1,15 +1,38 @@
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
-import React, {useState} from 'react';
+import React, {useState,useContext, useEffect} from 'react';
 import { Text, View , StyleSheet, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, Keyboard} from 'react-native';
 import Task from './componenter/Task';
+import  UserContext ,{UserProvider } from './componenter/UserContext';
+
 
 export default function App() {
   const [task, setTask] = useState();
 
   const [taskItems, setTaskItems] = useState([]);
 
+  const  userx = useContext(UserContext);
+  
 
+
+  /*const [user, setUser] = useState("oscar");
+  
+   
+  function setUserContext(name){
+    setUser(name)
+    console.log("!!"+user)
+
+  }
+  useEffect(() => {
+    
+    setUserContext("oscar")
+     
+    
+    
+  }, [])
+  
+  
+*/
   const handleAddTask = () =>{
     
     setTaskItems([...taskItems, task])
@@ -21,22 +44,33 @@ export default function App() {
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy);
   }
+  
+  
 
   return (
+    <UserProvider value={{name:"  (Press to remove)"}}>
     <View style={styles.container}>
       <View style={styles.taskWrapper}>
-        <Text style={styles.sectionTitle}>Dagens påminnelse</Text>
+        
+        
+        <Text style={styles.sectionTitle} >Todays Task {userx.name} </Text>
+        
      
        <View style = {styles.items}>
-         {/* this is where task will go*/}
+         {/* här komemr tasken vara*/}
          {
            taskItems.map((item, index) => {
              
              return (
+              
+        
+              
              <TouchableOpacity key= {index} onPress={() => completeTask(index)}>
                <Task text={item}/>
 
              </TouchableOpacity > 
+
+             
              )
            })
          }
@@ -60,6 +94,8 @@ export default function App() {
       </KeyboardAvoidingView>
     
     </View>
+    </UserProvider>
+    
   );
 
 
@@ -125,6 +161,8 @@ export default function App() {
       fontWeight: "bold",
 
     },
+     
+    
 
 
   });
